@@ -1,8 +1,8 @@
 #pragma once
-#define n 5
-#define m 5
+#define dimention 5
+#define tabulation 4
 
-enum sort_type {
+enum sortType {
 	DESCENDING = 0,
 	ASCENDING
 };
