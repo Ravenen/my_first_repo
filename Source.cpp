@@ -4,29 +4,30 @@
 using namespace std;
 
 int main() {
-	Vector A[n];
-	matrixInput(A);
+	Matrix matrix[dimention];
+	matrixInput(matrix);
 	cout << endl;
 
 	cout << "Not sorted: " << endl;
-	matrixOutput(A);
+	matrixOutput(matrix);
 	cout << endl;
 
-	matrixSort(A, DESCENDING);
+	matrixSortByColumnDescending(matrix);
 	cout << "Sorted: " << endl;
-	matrixOutput(A);
+	matrixOutput(matrix);
 	cout << endl;
 
-	double sum = 0;
-	for (int i = 0; i < n; i++) {
-		int row = 1;
-		for (int j = 0; j < i; j++) {
-			row *= A[j].getElement(i);
+	double sumOfAvaragesGeometric = 0;
+	for (int indexInColumn = 0; indexInColumn < dimention; indexInColumn++) {
+		int rowProduct = 1;
+		for (int indexInRow = 0; indexInRow < indexInColumn; indexInRow++) {
+			rowProduct *= matrix[indexInRow].getElementInColumnByIndex(indexInColumn);
 		}
-		cout << "f(" << i << ") = " << (i == 0 ? 0 : pow(abs(row), 1./i)) << endl;
-		sum += (i == 0 ? 0 : pow(abs(row), 1./i));
+		double avarageGeometric = (indexInColumn == 0 ? 0 : pow(abs(rowProduct), 1. / indexInColumn));
+		cout << "f(" << indexInColumn << ") = " << avarageGeometric << endl;
+		sumOfAvaragesGeometric += avarageGeometric;
 	}
 	cout << endl;
-	cout << "F = " << sum;
+	cout << "F = " << sumOfAvaragesGeometric;
 	cout << endl;
 }

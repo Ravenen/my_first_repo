@@ -1,14 +1,16 @@
 #pragma once
 #include "consts.h"
 
-class Vector
+class Matrix
 {
 private:
-	int array[m];
+	int column[dimention];
 public:
-	friend void matrixInput(Vector A[]);
-	friend void matrixOutput(Vector A[]);
-	friend void matrixSort(Vector A[], sort_type type);
-	int getElement(int index);
+	friend void matrixInput(Matrix matrix[]);
+	friend void matrixOutput(Matrix matrix[]);
+	friend void matrixSortByColumnAscending(Matrix matrix[]);
+	friend void matrixSortByColumnDescending(Matrix matrix[]);
+	friend void matrixSortByColumn(Matrix matrix[], sortType type);
+	int getElementInColumnByIndex(int index);
 };
 

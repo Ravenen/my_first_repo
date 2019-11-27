@@ -4,84 +4,91 @@
 
 using namespace std;
 
-void mergeSort(int& r_arr, int len, sort_type type);
+void mergeSort(int inputArray[], int arrayLength, sortType type);
 
-int Vector::getElement(int index) {
-	return array[index];
+int Matrix::getElementInColumnByIndex(int index) {
+	return column[index];
 }
 
-void matrixInput(Vector A[]) {
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < n; j++) {
-			cin >> A[j].array[i];
+void matrixInput(Matrix matrix[]) {
+	for (int indexInColumn = 0; indexInColumn < dimention; indexInColumn++) {
+		for (int indexInRow = 0; indexInRow < dimention; indexInRow++) {
+			cin >> matrix[indexInRow].column[indexInColumn];
 		}
 	}
 }
 
-void matrixOutput(Vector A[]) {
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < n; j++) {
-			cout << setw(4) << A[j].array[i];
+void matrixOutput(Matrix matrix[]) {
+	for (int indexInColumn = 0; indexInColumn < dimention; indexInColumn++) {
+		for (int indexInRow = 0; indexInRow < dimention; indexInRow++) {
+			cout << setw(tabulation) << matrix[indexInRow].column[indexInColumn];
 		}
 		cout << endl;
 	}
 }
 
-void  matrixSort(Vector A[], sort_type type) {
-	for (int i = 0; i < n; i++) {
-		int column[m] = { 0 };
-		for (int h = 0; h < m; h++) {
-			column[h] = A[i].array[h];
-		} 
-		mergeSort(*column, m, type);
-		for (int h = 0; h < m; h++) {
-			A[i].array[h] = column[h];
-		}
+void matrixSortByColumnAscending(Matrix matrix[]) {
+	matrixSortByColumn(matrix, ASCENDING);
+}
+
+void matrixSortByColumnDescending(Matrix matrix[]) {
+	matrixSortByColumn(matrix, DESCENDING);
+}
+
+void matrixSortByColumn(Matrix matrix[], sortType type) {
+	for (int columnIndex = 0; columnIndex < dimention; columnIndex++) {
+		mergeSort(matrix[columnIndex].column, dimention, type);
 	}
 }
 
-void mergeSort(int& r_arr, int len, sort_type type) {
-	int* arr = &r_arr;
-	if (len < 2) {
+void splitArray(int inputArray[], int inputArrayLength, int leftPart[], int leftArrayLength, int rightPart[], int rightArrayLength) {
+	for (int index = 0; index < leftArrayLength; index++) {
+		leftPart[index] = inputArray[index];
+	}
+	for (int index = 0; index < rightArrayLength; index++) {
+		rightPart[index] = inputArray[leftArrayLength + index];
+	}
+}
+
+void mergeSort(int inputArray[], int arrayLength, sortType type) {
+	if (arrayLength < 2) {
 		return;
 	}
 
-	int* a = new int[len / 2];
-	int* b = new int[len - len / 2];
+	int leftPartLength = arrayLength / 2;
+	int rightPartLength = arrayLength - leftPartLength;
 
-	for (int k = 0; k < len / 2; k++) {
-		a[k] = arr[k];
-	}
-	for (int h = 0; h < len - len / 2; h++) {
-		b[h] = arr[len / 2 + h];
-	}
+	int* leftPart = new int[leftPartLength];
+	int* rightPart = new int[rightPartLength];
 
-	mergeSort(*a, len / 2, type);
-	mergeSort(*b, len - len / 2, type);
+	splitArray(inputArray, arrayLength, leftPart, leftPartLength, rightPart, rightPartLength);
+
+	mergeSort(leftPart, leftPartLength, type);
+	mergeSort(rightPart, rightPartLength, type);
 
 
-	int left = 0, right = 0;
-	for (int i = 0; i < len; i++) {
-		if (left >= len / 2) {
-			arr[i] = b[right];
-			right++;
+	int indexInLeftPart = 0, indexInRightPart = 0;
+	for (int index = 0; index < arrayLength; index++) {
+		if (indexInLeftPart >= leftPartLength) {
+			inputArray[index] = rightPart[indexInRightPart];
+			indexInRightPart++;
 			continue;
 		}
-		if (right >= len - len / 2) {
-			arr[i] = a[left];
-			left++;
+		if (indexInRightPart >= rightPartLength) {
+			inputArray[index] = leftPart[indexInLeftPart];
+			indexInLeftPart++;
 			continue;
 		}
-		if ((type == ASCENDING && a[left] < b[right]) || (type == DESCENDING && a[left] > b[right])) {
-			arr[i] = a[left];
-			left++;
+		if ((type == ASCENDING && leftPart[indexInLeftPart] < rightPart[indexInRightPart]) || (type == DESCENDING && leftPart[indexInLeftPart] > rightPart[indexInRightPart])) {
+			inputArray[index] = leftPart[indexInLeftPart];
+			indexInLeftPart++;
 		}
 		else {
-			arr[i] = b[right];
-			right++;
+			inputArray[index] = rightPart[indexInRightPart];
+			indexInRightPart++;
 		}
 	}
 
-	delete[] a;
-	delete[] b;
+	delete[] leftPart;
+	delete[] rightPart;
 }
