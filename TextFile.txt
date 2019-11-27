@@ -1,3 +1,0 @@
-Test text string.
-This is spam with a mistake.
-I will fix that.
