@@ -1,6 +1,6 @@
 #pragma once
-#define dimention 5
-#define tabulation 4
+#define DIMENTION 5
+#define TABULATION 4
 
 enum sortType {
 	DESCENDING = 0,

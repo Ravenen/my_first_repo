@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-	Matrix matrix[dimention];
+	Matrix matrix[DIMENTION];
 	matrixInput(matrix);
 	cout << endl;
 
@@ -17,17 +17,17 @@ int main() {
 	matrixOutput(matrix);
 	cout << endl;
 
-	double sumOfAvaragesGeometric = 0;
-	for (int indexInColumn = 0; indexInColumn < dimention; indexInColumn++) {
-		int rowProduct = 1;
-		for (int indexInRow = 0; indexInRow < indexInColumn; indexInRow++) {
-			rowProduct *= matrix[indexInRow].getElementInColumnByIndex(indexInColumn);
+	double sum_of_avarages_geometric = 0;
+	for (int index_in_column = 0; index_in_column < DIMENTION; index_in_column++) {
+		int row_product = 1;
+		for (int index_in_row = 0; index_in_row < index_in_column; index_in_row++) {
+			row_product *= matrix[index_in_row].getElementInColumnByIndex(index_in_column);
 		}
-		double avarageGeometric = (indexInColumn == 0 ? 0 : pow(abs(rowProduct), 1. / indexInColumn));
-		cout << "f(" << indexInColumn << ") = " << avarageGeometric << endl;
-		sumOfAvaragesGeometric += avarageGeometric;
+		double avarage_geometric = (index_in_column == 0 ? 0 : pow(abs(row_product), 1. / index_in_column));
+		cout << "f(" << index_in_column << ") = " << avarage_geometric << endl;
+		sum_of_avarages_geometric += avarage_geometric;
 	}
 	cout << endl;
-	cout << "F = " << sumOfAvaragesGeometric;
+	cout << "F = " << sum_of_avarages_geometric;
 	cout << endl;
 }

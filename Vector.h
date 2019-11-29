@@ -4,7 +4,7 @@
 class Matrix
 {
 private:
-	int column[dimention];
+	int column[DIMENTION];
 public:
 	friend void matrixInput(Matrix matrix[]);
 	friend void matrixOutput(Matrix matrix[]);
