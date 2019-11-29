@@ -4,24 +4,24 @@
 
 using namespace std;
 
-void mergeSort(int inputArray[], int arrayLength, sortType type);
+void mergeSort(int input_array[], int array_length, sortType type);
 
 int Matrix::getElementInColumnByIndex(int index) {
 	return column[index];
 }
 
 void matrixInput(Matrix matrix[]) {
-	for (int indexInColumn = 0; indexInColumn < dimention; indexInColumn++) {
-		for (int indexInRow = 0; indexInRow < dimention; indexInRow++) {
-			cin >> matrix[indexInRow].column[indexInColumn];
+	for (int index_in_column = 0; index_in_column < DIMENTION; index_in_column++) {
+		for (int index_in_row = 0; index_in_row < DIMENTION; index_in_row++) {
+			cin >> matrix[index_in_row].column[index_in_column];
 		}
 	}
 }
 
 void matrixOutput(Matrix matrix[]) {
-	for (int indexInColumn = 0; indexInColumn < dimention; indexInColumn++) {
-		for (int indexInRow = 0; indexInRow < dimention; indexInRow++) {
-			cout << setw(tabulation) << matrix[indexInRow].column[indexInColumn];
+	for (int index_in_column = 0; index_in_column < DIMENTION; index_in_column++) {
+		for (int index_in_row = 0; index_in_row < DIMENTION; index_in_row++) {
+			cout << setw(TABULATION) << matrix[index_in_row].column[index_in_column];
 		}
 		cout << endl;
 	}
@@ -36,59 +36,59 @@ void matrixSortByColumnDescending(Matrix matrix[]) {
 }
 
 void matrixSortByColumn(Matrix matrix[], sortType type) {
-	for (int columnIndex = 0; columnIndex < dimention; columnIndex++) {
-		mergeSort(matrix[columnIndex].column, dimention, type);
+	for (int column_index = 0; column_index < DIMENTION; column_index++) {
+		mergeSort(matrix[column_index].column, DIMENTION, type);
 	}
 }
 
-void splitArray(int inputArray[], int inputArrayLength, int leftPart[], int leftArrayLength, int rightPart[], int rightArrayLength) {
-	for (int index = 0; index < leftArrayLength; index++) {
-		leftPart[index] = inputArray[index];
+void splitArray(int input_array[], int input_array_length, int left_part[], int left_array_length, int right_part[], int right_array_length) {
+	for (int index = 0; index < left_array_length; index++) {
+		left_part[index] = input_array[index];
 	}
-	for (int index = 0; index < rightArrayLength; index++) {
-		rightPart[index] = inputArray[leftArrayLength + index];
+	for (int index = 0; index < right_array_length; index++) {
+		right_part[index] = input_array[left_array_length + index];
 	}
 }
 
-void mergeSort(int inputArray[], int arrayLength, sortType type) {
-	if (arrayLength < 2) {
+void mergeSort(int input_array[], int array_length, sortType type) {
+	if (array_length < 2) {
 		return;
 	}
 
-	int leftPartLength = arrayLength / 2;
-	int rightPartLength = arrayLength - leftPartLength;
+	int left_part_length = array_length / 2;
+	int right_part_length = array_length - left_part_length;
 
-	int* leftPart = new int[leftPartLength];
-	int* rightPart = new int[rightPartLength];
+	int* left_part = new int[left_part_length];
+	int* right_part = new int[right_part_length];
 
-	splitArray(inputArray, arrayLength, leftPart, leftPartLength, rightPart, rightPartLength);
+	splitArray(input_array, array_length, left_part, left_part_length, right_part, right_part_length);
 
-	mergeSort(leftPart, leftPartLength, type);
-	mergeSort(rightPart, rightPartLength, type);
+	mergeSort(left_part, left_part_length, type);
+	mergeSort(right_part, right_part_length, type);
 
 
-	int indexInLeftPart = 0, indexInRightPart = 0;
-	for (int index = 0; index < arrayLength; index++) {
-		if (indexInLeftPart >= leftPartLength) {
-			inputArray[index] = rightPart[indexInRightPart];
-			indexInRightPart++;
+	int index_in_left_part = 0, index_in_right_part = 0;
+	for (int index = 0; index < array_length; index++) {
+		if (index_in_left_part >= left_part_length) {
+			input_array[index] = right_part[index_in_right_part];
+			index_in_right_part++;
 			continue;
 		}
-		if (indexInRightPart >= rightPartLength) {
-			inputArray[index] = leftPart[indexInLeftPart];
-			indexInLeftPart++;
+		if (index_in_right_part >= right_part_length) {
+			input_array[index] = left_part[index_in_left_part];
+			index_in_left_part++;
 			continue;
 		}
-		if ((type == ASCENDING && leftPart[indexInLeftPart] < rightPart[indexInRightPart]) || (type == DESCENDING && leftPart[indexInLeftPart] > rightPart[indexInRightPart])) {
-			inputArray[index] = leftPart[indexInLeftPart];
-			indexInLeftPart++;
+		if ((type == ASCENDING && left_part[index_in_left_part] < right_part[index_in_right_part]) || (type == DESCENDING && left_part[index_in_left_part] > right_part[index_in_right_part])) {
+			input_array[index] = left_part[index_in_left_part];
+			index_in_left_part++;
 		}
 		else {
-			inputArray[index] = rightPart[indexInRightPart];
-			indexInRightPart++;
+			input_array[index] = right_part[index_in_right_part];
+			index_in_right_part++;
 		}
 	}
 
-	delete[] leftPart;
-	delete[] rightPart;
+	delete[] left_part;
+	delete[] right_part;
 }
